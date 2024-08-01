@@ -20,13 +20,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExist = await User.findOne({ email });
   if (userExist) {
-    res.status(405)
+    res.status(405);
     throw Error("User already Exist");
   }
 
   const userNameExist = await User.findOne({ name });
   if (userNameExist) {
-    res.status(406)
+    res.status(406);
     throw Error("Username already exist");
   }
   const user = await User.create({ name, email, password });
@@ -57,13 +57,28 @@ const logInUser = asyncHandler(async (req, res) => {
     throw Error("Password mismatch");
   }
   const response = {
-    _id:user._id,
-    name:user.name,
-    email:user.email,
-    isAdmin:user.isAdmin,
-    token:await generateToken(user._id),
-  } 
-  return res.status(200).json({response});
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: await generateToken(user._id),
+  };
+  return res.status(200).json(response);
 });
 
-export { registerUser, logInUser };
+const fetchAllUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword).find({
+    _id:{$ne: req.user._id}
+  }).select("-password -isAdmin");
+  res.send(users);
+});
+
+export { registerUser, logInUser, fetchAllUsers };

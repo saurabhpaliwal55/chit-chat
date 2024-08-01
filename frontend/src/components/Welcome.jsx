@@ -14,7 +14,7 @@ const Welcome = () => {
   return (
     <div className='p-2 w-[70%] flex flex-col justify-center items-center bg-white rounded-[20px] my-[15px]'>
         <img className='h-[500px] w-[500px] ' src={logo} alt="No image found" />
-        <b>Hi,{userDate.data.response.name} 👋 </b>
+        <b>Hi,{userDate.data.name} 👋 </b>
         <p>Use chit-chat only.</p>
     </div>
   )

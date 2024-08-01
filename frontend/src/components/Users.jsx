@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { logo } from "../constants";
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from "@mui/material";
 import User from "./UserAndGroupUI/User";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Users = () => {
+
+  const [refresh,setRefresh] = useState(true);
+  const [users,setUsers] = useState([]);
+  const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  if(!userData){
+    console.log("User not authenticated");
+    nav(-1);
+  }
+
+  useEffect(()=>{
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData?.data?.token}`
+      },
+    }
+     axios.get("/api/user/fetchUsers",config)
+    .then((data)=>{
+      setUsers(data.data)
+    });
+    console.log(users);
+  },[refresh])
+
   return (
     <div className="flex-[0.7] mt-5">
       <div className="flex items-center bg-white  rounded-[20px] p-[2px]">
@@ -12,7 +38,11 @@ const Users = () => {
         <p className="ml-10 font-extrabold text-[30px] text-gray-600">
           Online Users
         </p>
+        <IconButton onClick={()=>setRefresh(!refresh)}>
+          <RefreshIcon className="flex flex-end"/>
+        </IconButton>
       </div>
+    
       <div className="bg-white rounded-[20px] px-[10px] py-[6px] mt-[15px]  flex justify-between">
         <input
           className="border-none outline-none p-[10px]"
@@ -23,18 +53,9 @@ const Users = () => {
         </IconButton>
       </div>
       <div className="h-[450px] p-[10px] overflow-scroll ">
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
+        {users.map((user,index)=>{
+         return <User userData={user} key={index}/>
+        })}
       </div>
     </div>
   );
