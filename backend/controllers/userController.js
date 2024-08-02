@@ -50,8 +50,6 @@ const logInUser = asyncHandler(async (req, res) => {
   if (!user) {
     throw Error("user not found");
   }
-  console.log(user);
-
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) {
     throw Error("Password mismatch");

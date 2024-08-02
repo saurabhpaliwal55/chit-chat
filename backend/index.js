@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import userRouter from "./routes/userRoutes.js";
+import chatRouter from "./routes/userRoutes.js";
+import messageRouter from "./routes/userRoutes.js";
+
 
 dotenv.config();
 
@@ -19,6 +22,8 @@ app.get("/api",(req,res)=>{
 })
 
 app.use("/api/user",userRouter);
+app.use("/api/chat",chatRouter)
+app.use("/api/message",messageRouter)
 
 app.listen(PORT,()=>{
     console.log(`Server is running on PORT: ${PORT}`)
