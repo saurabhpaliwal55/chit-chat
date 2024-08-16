@@ -15,7 +15,7 @@ const Users = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   if(!userData){
     console.log("User not authenticated");
-    nav(-1);
+    navigate(-1);
   }
 
   useEffect(()=>{
@@ -24,7 +24,7 @@ const Users = () => {
         Authorization: `Bearer ${userData?.data?.token}`
       },
     }
-     axios.get("/api/user/fetchUsers",config)
+     axios.get("http://localhost:4040/api/user/fetchUsers",config)
     .then((data)=>{
       setUsers(data.data)
     });
@@ -52,9 +52,9 @@ const Users = () => {
           <SearchIcon />
         </IconButton>
       </div>
-      <div className="h-[450px] p-[10px] overflow-scroll ">
+      <div className="h-[450px] p-[10px] overflow-scroll" >
         {users.map((user,index)=>{
-         return <User userData={user} key={index}/>
+         return <User user={user} localUserData={userData}key={index}/>
         })}
       </div>
     </div>

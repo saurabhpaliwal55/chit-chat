@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import userRouter from "./routes/userRoutes.js";
-import chatRouter from "./routes/userRoutes.js";
-import messageRouter from "./routes/userRoutes.js";
+import chatRouter from "./routes/chatRoutes.js";
+import messageRouter from "./routes/messageRoute.js";
+import cors from 'cors'
 
 
 dotenv.config();
@@ -12,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json({limit:"16kb"}))
 app.use(express.urlencoded({extended:false,limit:"16kb"}))
+app.use(cors());
 connectDB();
 
 app.get("/",(req,res)=>{

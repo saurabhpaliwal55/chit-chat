@@ -8,6 +8,7 @@ import {
   fetchGroups,
   groupExit,
 } from "../controllers/chatController.js";
+
 const router = express.Router();
 
 router.post("/", protect, accessChat);
