@@ -1,7 +1,11 @@
 import React from 'react'
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {refreshSidebarFun} from "../../utils/refreshSidebar.js"
+
 const User = ({user,localUserData}) => {
   const name = user.name;
+  const dispatch = useDispatch();
   
   const handleClick = ()=>{
     console.log("Creating chat with", user.name);
@@ -17,7 +21,7 @@ const User = ({user,localUserData}) => {
       },
       config
     );
-    
+    dispatch(refreshSidebarFun())
   }
   return (
     <div className='flex items-center bg-white rounded-[20px] py-[10px] px-[5px] m-[10px] gap-4 hover:bg-[rgb(226,226,226)] active:bg-white' onClick={handleClick}>

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 const ConversationItems = ({props}) => {
     const navigate = useNavigate();
+    console.log(props.users[1].name);
+
+    
   return (
     <div className='p-[5px] m-[5px] hover:bg-[rgb(226,226,226)] active:bg-white' style={{
         display:"grid",
@@ -17,12 +20,12 @@ const ConversationItems = ({props}) => {
             color:"white",
             justifySelf:"center",
             alignSelf:"center"
-        }}>{props.name[0]}</p>
+        }}>{props.users[1].name[0]}</p>
         <p style={{
             gridArea:'1/2/2/4',
             fontWeight:"bold",
             color:"rgba(0,0,0,.54)"
-        }}>{props.name}</p>
+        }}>{props.users[1].name}</p>
         <p style={{
             fontSize:"0.75rem",
         }}>{props.lastMessage}</p>
@@ -30,7 +33,7 @@ const ConversationItems = ({props}) => {
             justifySelf:"flex-end",
             fontSize:"0.75rem",
             color:"rgba(0,0,0,.54)"
-        }}>{props.timeStamp}</p>
+        }}>TimeStamp</p>
     </div>
   )
 }

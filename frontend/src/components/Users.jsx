@@ -28,7 +28,6 @@ const Users = () => {
     .then((data)=>{
       setUsers(data.data)
     });
-    console.log(users);
   },[refresh])
 
   return (

@@ -9,7 +9,7 @@ const chatSchema = new Schema(
       type: Boolean,
     },
     users: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    lastMessage: {
+    latestMessage: {
       type: Schema.Types.ObjectId,
       ref: "Message",
     },
